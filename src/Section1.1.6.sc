@@ -60,10 +60,12 @@ val answer = "(/ (+ 5 4 (- 2 (- 3 (+ 6 (/ 4 5))))) (* 3 (- 6 2) (- 2 7)))"
  * Exercise 1.3.  Define a procedure that takes three numbers as arguments
  * and returns the sum of the squares of the two larger numbers.
  */
-def squareOfLargestTwo(nums:List[Int]) =
-  nums.sorted.takeRight(2).foldLeft(0)((acc, n) => acc + (n*n))
+{
+  def squareOfLargestTwo(nums:List[Int]) =
+    nums.sorted.takeRight(2).foldLeft(0)((acc, n) => acc + (n*n))
 
-squareOfLargestTwo(List(1,2,3))
+  squareOfLargestTwo(List(1,2,3))
+}
 
 /*
  * Exercise 1.4.  Observe that our model of evaluation allows for combinations
@@ -73,7 +75,14 @@ squareOfLargestTwo(List(1,2,3))
  * (define (a-plus-abs-b a b)
  *   ((if (> b 0) + -) a b))
  */
-val h = 3
+{
+  def add = (a:Int, b:Int) => a + b
+  def sub = (a:Int, b:Int) => a - b
+  def a_plus_abs_b(a:Int, b:Int) = (if(b > 0) add else sub)(a, b)
+  a_plus_abs_b(1,-2)
+}
+
+
 
 /*
  * Exercise 1.5.  Ben Bitdiddle has invented a test to determine whether the
@@ -99,3 +108,11 @@ val h = 3
  * predicate expression is evaluated first, and the result determines
  * whether to evaluate the consequent or the alternative expression.)
  */
+{
+  def p:Int = p
+  def test_call_by_name(x: => Int, y: => Int)= if(x == 0) 0 else y
+  def test_call_by_value(x:Int, y:Int)= if(x == 0) 0 else y
+
+  test_call_by_name(0, (p))
+//  test_call_by_value(0, (p)) // infinite loop
+}
