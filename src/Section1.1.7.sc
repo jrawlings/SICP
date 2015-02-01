@@ -4,7 +4,6 @@
  * in terms of cond?'' she asks. Alyssa's friend Eva Lu Ator claims this can
  * indeed be done, and she defines a new version of if:
  *
- *
  * (define (new-if predicate then-clause else-clause)
  *   (cond (predicate then-clause)
  *         (else else-clause)))
@@ -28,7 +27,16 @@
  * What happens when Alyssa attempts to use this to compute square roots?
  * Explain.
  */
+val a = """
+           Since Scheme uses applicative order evaluation, all parameters
+           of a function are evaluated before the function is executed. This
+           results in an infinite loop. 'cond' and the special form 'if'
+           evaluate predicates as-needed which result in a proper execution
+           of the sqrt-iter function.
 
+           This can be somewhat simulated in scala with a call-by-name
+           new_if function.
+"""
 
 /*
  * Exercise 1.7.  The good-enough? test used in computing square roots will
