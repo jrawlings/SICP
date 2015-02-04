@@ -34,9 +34,19 @@ val a = """
            evaluate predicates as-needed which result in a proper execution
            of the sqrt-iter function.
 
-           This can be somewhat simulated in scala with a call-by-name
-           new_if function.
+           This can be somewhat simulated in scala with a call-by-value
+           new_if function. The new_if function below is call-by-name
+           and works as intended.
 """
+case class IsTrue(bool: Boolean) extends Function[Boolean, Boolean] {
+  def apply(arg: Boolean) = arg
+}
+val good_enough: (Int, Int) => Boolean = (a, b) => /* do something interesting */ a == b
+val sqrt_iter: (Int, Int) => Int = (a, b) => /* do something interesting */ sqrt_iter(a, b)
+def new_if(pred:IsTrue, then_clause: => Int, else_clause: => Int) =
+  if(pred.bool) then_clause else else_clause
+
+new_if(IsTrue(good_enough(5, 5)), 5, sqrt_iter(5, 1))
 
 /*
  * Exercise 1.7.  The good-enough? test used in computing square roots will
