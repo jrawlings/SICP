@@ -41,12 +41,12 @@ val a = """
 case class IsTrue(bool: Boolean) extends Function[Boolean, Boolean] {
   def apply(arg: Boolean) = arg
 }
-val good_enough: (Int, Int) => Boolean = (a, b) => /* do something interesting */ a == b
-val sqrt_iter: (Int, Int) => Int = (a, b) => /* do something interesting */ sqrt_iter(a, b)
+def sqrt_good_enough(a:Int, b:Int) = /* do something interesting */ a == b
+def sqrt_iter(a:Int, b:Int): Int = /* do something interesting */ sqrt_iter(a, b)
 def new_if(pred:IsTrue, then_clause: => Int, else_clause: => Int) =
   if(pred.bool) then_clause else else_clause
 
-new_if(IsTrue(good_enough(5, 5)), 5, sqrt_iter(5, 1))
+new_if(IsTrue(sqrt_good_enough(5, 5)), 5, sqrt_iter(5, 1))
 
 /*
  * Exercise 1.7.  The good-enough? test used in computing square roots will
@@ -61,6 +61,7 @@ new_if(IsTrue(good_enough(5, 5)), 5, sqrt_iter(5, 1))
  * better for small and large numbers?
  */
 
+
 /*
  * Exercise 1.8.  Newton's method for cube roots is based on the fact that
  * if y is an approximation to the cube root of x, then a better approximation
@@ -72,3 +73,16 @@ new_if(IsTrue(good_enough(5, 5)), 5, sqrt_iter(5, 1))
  * Newton's method in general as an abstraction of these square-root and
  * cube-root procedures.)
  */
+def cuberoot_good_enough(guess:Double, x:Double) = math.abs(math.pow(guess, 3) - x) < 0.001
+
+def cuberoot_improve(guess:Double, x:Double) = (x / math.pow(guess, 2) + 2 * guess) / 3
+
+def cuberoot_iter(guess:Double, x:Double): Double =
+  if(cuberoot_good_enough(guess, x))
+    guess
+  else
+    cuberoot_iter(cuberoot_improve(guess, x), x)
+
+def cuberoot(x: Double) = cuberoot_iter(1.0, x)
+
+cuberoot(27.0)
