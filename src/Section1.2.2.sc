@@ -4,7 +4,24 @@
  * computes f by means of a recursive process. Write a procedure that computes
  * f by means of an iterative process.
  */
+def f(n:Int):Int = if(n < 3) n else f(n - 1) + 2 * f(n - 2) + 3 * f(n - 3)
 
+f(3)
+f(4)
+f(5)
+f(6)
+
+def f1(n:Int):Int = {
+  if(n < 3) n
+  else {
+    val l = List.range(n, 3)
+    l.fold(0) { (acc, x) =>
+
+    }
+  }
+
+
+}
 
 /**
  * Exercise 1.12.  The following pattern of numbers is called Pascal's triangle.
