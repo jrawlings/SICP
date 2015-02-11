@@ -13,7 +13,7 @@
 def identity(x:Double) = x
 def inc_any(x:Double) = (a:Double) => a + x
 
-def prod(term:Function1[Double, Double], a:Double, next:Function1[Double, Double], b:Double):Double =
+def prod(term:Function[Double, Double], a:Double, next:Function[Double, Double], b:Double):Double =
   if(a > b) 1 else term(a) * prod(term, next(a), next, b)
 def product(a:Double, b:Double) = prod(identity, a, inc_any(1), b)
 product(2,4)
@@ -27,7 +27,7 @@ def pi(a:Double) = {
 }
 pi(100)
 
-def prod_iter(term:Function1[Double, Double], a:Double, next:Function1[Double, Double], b:Double) = {
+def prod_iter(term:Function[Double, Double], a:Double, next:Function[Double, Double], b:Double) = {
   def iter(a:Double, result:Double):Double =
     if(a > b) result else iter(next(a), result * term(a))
   iter(a, 1)
@@ -50,7 +50,7 @@ product_iter(2,4)
  * to accumulate.
  */
 def accumulate(combiner:Function2[Double, Double, Double], null_value:Double,
-               term:Function1[Double, Double], a:Double, next:Function1[Double, Double],
+               term:Function[Double, Double], a:Double, next:Function[Double, Double],
                b:Double):Double = {
   if(a > b) null_value else combiner(term(a), accumulate(combiner, null_value, term, next(a), next, b))
 }

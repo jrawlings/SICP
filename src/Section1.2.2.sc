@@ -11,18 +11,6 @@ f(4)
 f(5)
 f(6)
 
-def f1(n:Int):Int = {
-  if(n < 3) n
-  else {
-    val l = List.range(n, 3)
-    l.fold(0) { (acc, x) =>
-
-    }
-  }
-
-
-}
-
 /**
  * Exercise 1.12.  The following pattern of numbers is called Pascal's triangle.
  *
